@@ -48,7 +48,7 @@ else:
 
 
 #Ex5
-av = ["red", "blue", "yellow", "green"]
+fav = ["red", "blue", "yellow", "green"]
 color = input("Your color? ")
 if color in fav:
     print("yo same!")
