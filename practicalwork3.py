@@ -62,7 +62,7 @@ class StudentMarkManagement:
     def __init__(self):
         self.__students = []
         self.__courses = []
-        self.__marks = {}  # Cấu trúc: { course_id: { student_id: mark } }
+        self.__marks = {}
 
     def add_students(self):
         n = int(input("Enter number of students in the class: "))
@@ -94,11 +94,10 @@ class StudentMarkManagement:
             for s in self.__students:
                 val = float(input(f"  Mark for {s.get_name()} (ID: {s.get_id()}): "))
                 
-                # 1. Dùng math.floor() làm tròn xuống 1 chữ số thập phân khi nhập
                 floored_mark = math.floor(val * 10) / 10.0
                 self.__marks[cid][s.get_id()] = floored_mark
 
-            # Tự động tính lại GPA và sắp xếp lại danh sách sinh viên
+
             self.calculate_gpas()
             self.sort_students_by_gpa()
         else:
@@ -121,15 +120,13 @@ class StudentMarkManagement:
                     credits_list.append(course.get_credits())
 
             if credits_list:
-                # Tạo numpy array
                 np_marks = np.array(marks_list)
                 np_credits = np.array(credits_list)
 
-                # Phép tính trọng số: sum(mark * credit) / sum(credits)
+
                 total_credits = np.sum(np_credits)
                 if total_credits > 0:
                     weighted_gpa = np.sum(np_marks * np_credits) / total_credits
-                    # Làm tròn xuống 1 chữ số thập phân bằng math.floor
                     student.set_gpa(math.floor(weighted_gpa * 10) / 10.0)
 
     def sort_students_by_gpa(self):
@@ -137,13 +134,10 @@ class StudentMarkManagement:
         if not self.__students:
             return
 
-        # Tạo mảng numpy chứa điểm GPA của tất cả sinh viên
         gpas = np.array([s.get_gpa() for s in self.__students])
 
-        # argsort sắp xếp tăng dần -> đảo ngược [::-1] để thành giảm dần
         sorted_indices = np.argsort(gpas)[::-1]
 
-        # Cập nhật danh sách sinh viên theo thứ tự mới
         self.__students = [self.__students[i] for i in sorted_indices]
 
     def list_students(self):
