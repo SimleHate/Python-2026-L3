@@ -1,4 +1,4 @@
-# File: 3.student.mark.oop.math.py
+#Practical_work_3
 import math
 import numpy as np
 
